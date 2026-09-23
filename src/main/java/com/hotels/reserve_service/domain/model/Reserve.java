@@ -1,12 +1,11 @@
 package com.hotels.reserve_service.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+@Data
+@Builder
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor

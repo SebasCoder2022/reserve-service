@@ -1,3 +1,14 @@
 spring:
   application:
     name: reserve-service
+
+r2dbc:
+  url: r2dbc:postgresql://localhost:5432/b3_hotels_db
+  username: postgres
+  password: postgres
+  sql:
+    init:
+      mode: always
+
+server:
+  port: 8080
