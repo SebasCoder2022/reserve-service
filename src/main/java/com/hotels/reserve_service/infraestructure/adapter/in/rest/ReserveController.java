@@ -21,15 +21,13 @@ public class ReserveController {
     @PostMapping
     public Mono<ResponseEntity<Reserve>> createReserve(@RequestBody ReserveRequestDTO dto){
 
-        Reserve reserve = new Reserve(
-                null,
-                dto.idClient(),
-                dto.idRoom(),
-                dto.startDate(),
-                dto.endDate(),
-                dto.totalPrice(),
-                "CREATED"
-        );
+        Reserve reserve = Reserve.builder()
+                .idClient(dto.idClient())
+                .idRoom(dto.idRoom())
+                .startDate(dto.startDate())
+                .endDate(dto.endDate())
+                .totalPrice(dto.totalPrice())
+                .build(); // Toma CreatedState() por defecto automáticamente
 
         return createReserveUseCase.create(reserve)
                 .map(savedReserve -> ResponseEntity
