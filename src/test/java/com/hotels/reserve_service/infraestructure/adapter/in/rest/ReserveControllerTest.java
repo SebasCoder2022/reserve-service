@@ -70,7 +70,9 @@ class ReserveControllerTest {
         when(cancelReserveUseCase.cancel(eq(reserveId), any()))
                 .thenReturn(Mono.error(new ReservationNotFoundException("Reserva con id " + reserveId + " no encontrada.")));
 
-        webTestClient.patch()
+        webTestClient
+                .mutateWith(csrf())
+                .patch()
                 .uri("/api/v1/reserves/{id}/cancel", reserveId)
                 .exchange()
                 .expectStatus().isNotFound()
@@ -86,7 +88,9 @@ class ReserveControllerTest {
         when(completeReserveUseCase.Complete(reserveId))
                 .thenReturn(Mono.error(new InvalidStateTransitionException("No se puede completar una reserva cancelada.")));
 
-        webTestClient.patch()
+        webTestClient
+                .mutateWith(csrf())
+                .patch()
                 .uri("/api/v1/reserves/{id}/complete", reserveId)
                 .exchange()
                 .expectStatus().isBadRequest()
