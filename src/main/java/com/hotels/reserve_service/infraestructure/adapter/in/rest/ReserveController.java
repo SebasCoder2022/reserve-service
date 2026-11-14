@@ -2,9 +2,7 @@ package com.hotels.reserve_service.infraestructure.adapter.in.rest;
 
 
 import com.hotels.reserve_service.domain.model.Reserve;
-import com.hotels.reserve_service.domain.port.in.ICancelReserveUseCase;
-import com.hotels.reserve_service.domain.port.in.IConfirmReserveUseCase;
-import com.hotels.reserve_service.domain.port.in.ICreateReserveUseCase;
+import com.hotels.reserve_service.domain.port.in.*;
 import com.hotels.reserve_service.infraestructure.adapter.in.dto.CancelReserveDTO;
 import com.hotels.reserve_service.infraestructure.adapter.in.dto.ReserveRequestDTO;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +20,8 @@ public class ReserveController {
     private final ICreateReserveUseCase createReserveUseCase;
     private final IConfirmReserveUseCase confirmReserveUseCase;
     private final ICancelReserveUseCase cancelReserveUseCase;
+    private final ICheckInReserveUseCase checkInReserveUseCase;
+    private final ICompleteReserveUseCase completeReserveUseCase;
 
     @PostMapping
     public Mono<ResponseEntity<Reserve>> createReserve(@RequestBody ReserveRequestDTO dto){
@@ -56,5 +56,19 @@ public class ReserveController {
         return cancelReserveUseCase.cancel(id, reason)
                 .map(ResponseEntity::ok);
     }
+
+    @PatchMapping("/{id}/check-in")
+    public Mono<ResponseEntity<Reserve>> checkInReserve(@PathVariable String id){
+        return checkInReserveUseCase.checkIn(id)
+                .map(ResponseEntity::ok);
+    }
+
+    @PatchMapping("/{id}/complete")
+    public Mono<ResponseEntity<Reserve>> completeReserve(@PathVariable String id){
+        return completeReserveUseCase.Complete(id)
+                .map(ResponseEntity::ok);
+    }
+
+
 
 }
